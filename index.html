@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Caixinha WM - App</title>
+    <title>Caixinha WM - App e Ver Senha</title>
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icone.jpg">
     <style>
@@ -113,7 +113,7 @@
         
         <div style="position: relative; width: 100%; margin: 15px 0;">
             <input type="password" id="senha-input" placeholder="SENHA" style="width: 100%; margin: 0; padding-right: 40px; text-align: center; font-size: 20px; font-weight: bold; letter-spacing: 2px;">
-            <span id="icone-olho" onclick="mostrarSenha()" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 22px;" title="Mostrar Senha">👁️</span>
+            <span id="icone-olho" onclick="mostrarSenha()" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 22px;" title="Mostrar Senha">👁️‍🗨️</span>
         </div>
 
         <button class="btn-salvar" style="width: 100%; font-size: 16px; padding: 15px;" onclick="validarAcesso()">ENTRAR NO APP</button>
@@ -326,17 +326,17 @@
     }
 
     // ==========================================
-    // 👀 FUNÇÃO DO OLHINHO DA SENHA
+    // 👀 FUNÇÃO DO OLHINHO DA SENHA (LÓGICA INVERTIDA E SEM MACACO)
     // ==========================================
     function mostrarSenha() {
         let input = document.getElementById('senha-input');
         let icone = document.getElementById('icone-olho');
         if (input.type === 'password') {
-            input.type = 'text';
-            icone.innerText = '🙈';
+            input.type = 'text'; // Mostra a senha como texto
+            icone.innerText = '👁️'; // Muda para Olho Aberto ao exibir
         } else {
-            input.type = 'password';
-            icone.innerText = '👁️';
+            input.type = 'password'; // Oculta a senha como bolinhas
+            icone.innerText = '👁️‍🗨️'; // Muda para Olho Fechado/Barrado ao ocultar
         }
     }
 
