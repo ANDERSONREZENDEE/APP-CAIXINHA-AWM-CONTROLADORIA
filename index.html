@@ -46,7 +46,6 @@
         #tela-planilha { display: none; padding: 10px; background: white; min-height: 90vh; }
         .tabela-container { overflow-x: auto; margin-top: 10px; border: 1px solid #ddd; border-radius: 5px; width: 100%; }
         
-        /* ADICIONADO MIN-WIDTH PARA A TABELA NÃO ESPREMER NO CELULAR */
         table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 11px; background: white; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: middle; }
         th { background-color: var(--azul-wm); color: white; }
@@ -55,7 +54,6 @@
         .anexo-box { display: flex; flex-direction: column; align-items: center; margin-bottom: 5px; background: #f9f9f9; padding: 5px; border-radius: 4px; border: 1px solid #eee; text-align: center; max-width: 120px; }
         .legenda-foto { font-size: 10px; font-weight: bold; color: var(--azul-wm); word-wrap: break-word; text-align: center; }
 
-        /* NOVO CABEÇALHO RESPONSIVO */
         .cabecalho-oficial { display: block; font-size: 13px; line-height: 1.4; background: white; padding: 10px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 10px; overflow: hidden; }
         .cabecalho-topo { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #333; padding-bottom: 5px; gap: 5px; }
         .img-cabecalho { height: 45px; max-width: 28%; object-fit: contain; border-radius: 4px; }
@@ -65,34 +63,24 @@
         
         .cabecalho-oficial .info-box { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 8px; border-top: 1px solid #ccc; padding-top: 8px; }
 
-        /* REGRAS BLINDADAS PARA O PDF NÃO FICAR BRANCO E VOLTAR A FICAR GRANDE */
         @media print {
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             @page { size: landscape; margin: 0.5cm; }
-            
             body, html { display: block !important; background-color: white !important; height: auto !important; min-height: auto !important; overflow: visible !important; margin: 0 !important; padding: 0 !important; }
             .app-container { border: none !important; box-shadow: none !important; max-width: 100% !important; width: 100% !important; display: block !important; height: auto !important; min-height: auto !important; overflow: visible !important; padding: 0 !important; margin: 0 !important; }
-            
             .formulario, .area-acoes, .btn-voltar, .btn-ver-planilha, th:last-child, td:last-child { display: none !important; }
-            
             #tela-planilha, .tabela-container { display: block !important; overflow: visible !important; overflow-x: visible !important; overflow-y: visible !important; height: auto !important; width: 100% !important; margin: 0 !important; padding: 0 !important; border: none !important; }
-            
-            /* Tabela perde o min-width no PDF para caber na folha */
             table { display: table !important; font-size: 10px !important; width: 100% !important; min-width: auto !important; max-width: 100% !important; page-break-inside: auto; margin-top: 5px !important; table-layout: fixed !important; word-wrap: break-word !important; }
             tr { display: table-row !important; page-break-inside: avoid; page-break-after: auto; }
             th, td { display: table-cell !important; padding: 4px !important; word-wrap: break-word !important; overflow-wrap: break-word !important; white-space: normal !important; }
             thead { display: table-header-group !important; }
             tfoot { display: table-footer-group !important; }
             tbody { display: table-row-group !important; }
-            
-            /* Ajustes do Cabeçalho para Impressão */
             .cabecalho-oficial { display: block !important; border: 1px solid #000 !important; padding: 8px !important; margin-bottom: 5px !important; border-radius: 0 !important; }
             .cabecalho-oficial .info-box { grid-template-columns: 1fr 1fr !important; }
-            
             .img-cabecalho { height: 50px !important; max-width: none !important; }
             .texto-cabecalho h3 { font-size: 16px !important; white-space: normal !important; overflow: visible !important; }
             .texto-cabecalho small { font-size: 12px !important; white-space: normal !important; overflow: visible !important; }
-            
             .foto-miniatura { width: 80px !important; height: auto !important; max-height: 80px !important; object-fit: contain !important; }
             .anexo-box { border: none !important; padding: 0 !important; background: transparent !important; margin-bottom: 2px !important; }
             .legenda-foto { font-size: 9px !important; }
@@ -100,9 +88,34 @@
 
         #modal-foto { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; flex-direction: column; }
         #foto-ampliada { max-width: 90%; max-height: 80%; border: 3px solid white; }
+
+        /* ESTILOS DA NOVA TELA DE LOGIN */
+        #tela-login {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--azul-wm);
+            z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .login-box {
+            background: white; padding: 25px; border-radius: 10px; width: 85%; max-width: 320px;
+            text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .login-box img { max-height: 60px; margin-bottom: 10px; object-fit: contain; }
+        .login-box input { margin: 15px 0; text-align: center; font-size: 20px; font-weight: bold; width: 100%; letter-spacing: 2px; }
     </style>
 </head>
 <body>
+
+<div id="tela-login">
+    <div class="login-box">
+        <img src="LOGOTIPO.jpg" alt="Logo WM">
+        <h3 style="color: var(--azul-wm); margin-top: 0; margin-bottom: 5px;">ACESSO RESTRITO</h3>
+        <p style="color: #666; font-size: 12px; margin-bottom: 5px;">Área exclusiva para funcionários ativos.</p>
+        <input type="password" id="senha-input" placeholder="SENHA">
+        <button class="btn-salvar" style="width: 100%; font-size: 16px; padding: 15px;" onclick="validarAcesso()">ENTRAR NO APP</button>
+        <p id="erro-login" style="color: red; font-size: 13px; font-weight: bold; display: none; margin-top: 15px;">❌ Senha incorreta!</p>
+    </div>
+</div>
 
 <div class="app-container">
     <div id="tela-principal">
@@ -191,7 +204,7 @@
                     <option value="Comprovante de Venda">Comprovante de Venda</option>
                     <option value="Recibo">Recibo</option>
                     <option value="Comanda">Comanda</option>
-                    <option value="Orçamento">Orçamento</option>           
+                    <option value="Orçamento">Orçamento</option>            
                     <option value="Conta de Energia Elétrica">Conta de Energia Elétrica</option>
                     <option value="Conta de Água/Esgoto">Conta de Água/Esgoto</option>
                     <option value="Conta de Telecomunicação/Internet">Conta de Telecomunicação/Internet</option>
@@ -227,7 +240,7 @@
         <div class="area-acoes">
             <button class="btn-pausar" onclick="alert('✅ Salvo localmente!')">💾 Salvar e Pausar</button>
             <button class="btn-whats" onclick="gerarPDF()">📲 GERAR PDF PARA COMPARTILHAR</button>
-            <button class="btn-encerrar" onclick="encerrarCaixinha()">🏁 Encerrar o Caixinha</button>
+            <button class="btn-encerrar" onclick="encerrarCaixinha()">🏁 Encerrar o Caixinha e Atualizar</button>
         </div>
     </div>
 
@@ -286,6 +299,32 @@
 </div>
 
 <script>
+    // ==========================================
+    // 🔒 CONFIGURAÇÃO DE SENHA DO APP
+    // ==========================================
+    // Quando demitir alguém, mude a senha abaixo.
+    // O app da pessoa vai atualizar quando ela clicar em "Encerrar o Caixinha" 
+    // e ela não conseguirá mais entrar!
+    const SENHA_MESTRA = "WM2024"; 
+
+    window.onload = function() {
+        const autorizado = localStorage.getItem('acesso_concedido');
+        if (autorizado === 'true') {
+            document.getElementById('tela-login').style.display = 'none';
+        }
+    };
+
+    function validarAcesso() {
+        const senhaDigitada = document.getElementById('senha-input').value;
+        if (senhaDigitada === SENHA_MESTRA) {
+            localStorage.setItem('acesso_concedido', 'true');
+            document.getElementById('tela-login').style.display = 'none';
+        } else {
+            document.getElementById('erro-login').style.display = 'block';
+        }
+    }
+    // ==========================================
+
     document.getElementById('data').valueAsDate = new Date();
     let banco = JSON.parse(localStorage.getItem('wm_despesas')) || [];
     let indiceEdicao = -1; 
@@ -470,25 +509,48 @@
         setTimeout(() => { window.print(); }, 1500); 
     }
 
-    function encerrarCaixinha() { if(confirm("Zerar tudo? Você perderá todos os dados não enviados!")) { localStorage.clear(); location.reload(); } }
+    // ==========================================
+    // 🔄 NOVA FUNÇÃO DE ENCERRAR E ATUALIZAR
+    // ==========================================
+    async function encerrarCaixinha() { 
+        if(confirm("Zerar tudo? Você perderá todos os dados não enviados!")) { 
+            // Limpa os dados de uso e TIRA o acesso livre, forçando a pedir senha de novo
+            localStorage.clear(); 
+            
+            // Se tiver internet, destrói o cache antigo para baixar a versão atualizada
+            if (navigator.onLine && 'serviceWorker' in navigator) {
+                try {
+                    const keys = await caches.keys();
+                    for (let key of keys) {
+                        await caches.delete(key);
+                    }
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    for (let registration of registrations) {
+                        await registration.unregister();
+                    }
+                    console.log("Cache antigo limpo com sucesso.");
+                } catch (erro) {
+                    console.error("Erro ao limpar cache:", erro);
+                }
+            }
+            
+            // Recarrega puxando do GitHub fresco
+            location.reload(true); 
+        } 
+    }
+    // ==========================================
 
     document.getElementById('num-caixinha').value = localStorage.getItem('wm_num') || '';
     document.getElementById('nome-gestor').value = localStorage.getItem('wm_gestor') || '';
     document.getElementById('saldo-anterior').value = localStorage.getItem('wm_anterior') || '';
     calcularSaldo();
 
+    // ==========================================
+    // 📱 REGISTRO DO SERVICE WORKER (SILENCIOSO)
+    // ==========================================
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js').then(reg => {
-            reg.onupdatefound = () => {
-                const w = reg.installing;
-                w.onstatechange = () => { 
-                    if (w.state === 'installed' && navigator.serviceWorker.controller) { 
-                        if(confirm("🚀 Nova versão do aplicativo disponível! Atualizar agora? (Seus dados não serão perdidos)")) {
-                            location.reload(); 
-                        } 
-                    } 
-                };
-            };
+        navigator.serviceWorker.register('./sw.js').catch(err => {
+            console.log("Erro no Service Worker:", err);
         });
     }
 </script>
