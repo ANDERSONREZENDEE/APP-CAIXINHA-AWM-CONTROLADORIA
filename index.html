@@ -109,7 +109,7 @@
     <div class="login-box">
         <img src="LOGOTIPO.jpg" alt="Logo WM">
         <h3 style="color: var(--azul-wm); margin-top: 0; margin-bottom: 5px;">ACESSO RESTRITO</h3>
-        <p style="color: #666; font-size: 12px; margin-bottom: 5px;">Área exclusiva para funcionários</p>
+        <p style="color: #666; font-size: 12px; margin-bottom: 5px;">Área exclusiva para funcionários ativos.</p>
         
         <div style="position: relative; width: 100%; margin: 15px 0;">
             <input type="password" id="senha-input" placeholder="SENHA" style="width: 100%; margin: 0; padding-right: 40px; text-align: center; font-size: 20px; font-weight: bold; letter-spacing: 2px;">
@@ -307,9 +307,9 @@
     // 🔒 CONFIGURAÇÃO DE SENHA DO APP (CRIPTOGRAFADA)
     // ==========================================
     
-    // IMPORTANTE: Cole aqui o hash que o site gerou para a sua senha!
-    // Para efeito de teste, mantive este Hash que passei como exemplo
-    const HASH_SENHA_MESTRA = "544f77a1f22a352c4160858b2d787cba9576be6d70b0ed53b74a8139ca861a61";
+    // IMPORTANTE: Este é apenas um código de exemplo. 
+    // Entre no site online, digite wm2026, pegue o Hash gerado e cole AQUI dentro das aspas!
+    const HASH_SENHA_MESTRA = "d0901e13e0bd9116e0339591e1d03ff44f2537fc1bc7e49eb72bc1df3e020d58";
 
     window.onload = function() {
         const autorizado = localStorage.getItem('acesso_concedido');
@@ -318,7 +318,7 @@
         }
     };
 
-    // Função que calcula a criptografia OFFLINE usando a ferramenta nativa do navegador
+    // Função que calcula a criptografia OFFLINE
     async function gerarHash(texto) {
         const encoder = new TextEncoder();
         const data = encoder.encode(texto);
@@ -328,7 +328,7 @@
         return hashHex;
     }
 
-    // Validação que transforma a senha digitada em Hash antes de comparar
+    // Validação de senha
     async function validarAcesso() {
         const senhaDigitada = document.getElementById('senha-input').value;
         const hashDigitado = await gerarHash(senhaDigitada);
@@ -540,27 +540,33 @@
         setTimeout(() => { window.print(); }, 1500); 
     }
 
+    // ==========================================
+    // 🚀 NOVA FUNÇÃO DE ENCERRAR O CAIXINHA (TRUQUE DO CACHE)
+    // ==========================================
     async function encerrarCaixinha() { 
         if(confirm("Zerar tudo? Você perderá todos os dados não enviados!")) { 
+            
+            // 1. Limpa as despesas, saldos e senhas salvas
             localStorage.clear(); 
             
-            if (navigator.onLine && 'serviceWorker' in navigator) {
+            // 2. Destrói o Cache e o Service Worker (motor offline)
+            if ('serviceWorker' in navigator) {
                 try {
-                    const keys = await caches.keys();
-                    for (let key of keys) {
-                        await caches.delete(key);
+                    const nomesCaches = await caches.keys();
+                    await Promise.all(nomesCaches.map(nome => caches.delete(nome)));
+                    
+                    const registros = await navigator.serviceWorker.getRegistrations();
+                    for (let registro of registros) {
+                        await registro.unregister();
                     }
-                    const registrations = await navigator.serviceWorker.getRegistrations();
-                    for (let registration of registrations) {
-                        await registration.unregister();
-                    }
-                    console.log("Cache antigo limpo com sucesso.");
+                    console.log("Limpeza profunda de cache concluída.");
                 } catch (erro) {
-                    console.error("Erro ao limpar cache:", erro);
+                    console.error("Erro ao limpar cache profundo:", erro);
                 }
             }
             
-            location.reload(true); 
+            // 3. Recarrega a página forçando um link "fresco" com a data/hora
+            window.location.href = window.location.pathname + '?atualizar=' + new Date().getTime();
         } 
     }
 
