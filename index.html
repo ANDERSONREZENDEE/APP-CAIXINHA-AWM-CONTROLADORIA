@@ -8,6 +8,21 @@
    <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icone_v3.png">
     <link rel="icon" type="image/png" href="icone_v3.png">
+
+    <script>
+        // 1. Bloqueia o Botão Direito do Mouse imediatamente
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // 2. Bloqueia F12, Inspecionar Elemento, Exibir Código Fonte e Salvar Página
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || 
+               (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+               (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'C'))) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
     
     <style>
         :root {
@@ -126,7 +141,7 @@
         .login-box img { max-height: 60px; margin-bottom: 10px; object-fit: contain; pointer-events: none; }
     </style>
 </head>
-<body>
+<body ondragstart="return false;" ondrop="return false;">
 
 <div id="tela-login">
     <div class="login-box">
@@ -328,26 +343,10 @@
 
 <script>
     // ==========================================
-    // 🛑 SCRIPTS ANTI-XERETA (Bloqueia Cópia e DevTools)
-    // ==========================================
-    
-    document.addEventListener('contextmenu', event => event.preventDefault());
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'F12' || 
-           (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
-           (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'C'))) {
-            e.preventDefault();
-            return false;
-        }
-    });
-
-    // ==========================================
     // 👀 LER ATALHOS DO ÍCONE (NOVO / PLANILHA)
     // ==========================================
     function verificarAtalhos() {
         const urlParams = new URLSearchParams(window.location.search);
-        // "tela" é o nome do parâmetro que você colocou lá no manifest.json
         if (urlParams.get('tela') === 'planilha') {
             abrirPlanilha(); 
         }
@@ -365,7 +364,7 @@
         const autorizado = localStorage.getItem('acesso_concedido');
         if (autorizado === 'true') {
             document.getElementById('tela-login').style.display = 'none';
-            verificarAtalhos(); // Verifica o atalho se já estiver logado
+            verificarAtalhos(); 
         }
     };
 
@@ -385,7 +384,7 @@
         if (hashDigitado === HASH_SENHA_MESTRA) {
             localStorage.setItem('acesso_concedido', 'true');
             document.getElementById('tela-login').style.display = 'none';
-            verificarAtalhos(); // Verifica o atalho logo após digitar a senha certa
+            verificarAtalhos(); 
         } else {
             document.getElementById('erro-login').style.display = 'block';
         }
