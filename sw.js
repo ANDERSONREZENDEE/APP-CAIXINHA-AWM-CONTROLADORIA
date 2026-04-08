@@ -1,6 +1,6 @@
-const CACHE_NAME = 'caixinha-wm-v3'; // Mudamos para v3 para forçar a atualização!
+const CACHE_NAME = 'caixinha-wm-v4'; // Atualizado para v4 para limpar o cache velho
 
-// Aqui nós dizemos ao celular exatamente quais arquivos ele deve guardar para usar offline
+// Arquivos para guardar offline
 const arquivosParaGuardar = [
   './',
   './index.html',
@@ -8,9 +8,10 @@ const arquivosParaGuardar = [
   './sw.js',
   './LOGOTIPO.jpg',
   './Captura de tela 2026-02-13 132630.jpg',
-  './icone_v3.png',          // O nosso ícone novo e corrigido!
-  './OLHOABERTO.png',        // Imagem do olho aberto
-  './OLHOFECHADO_V2.png'     // Imagem do olho fechado
+  './icone_v3.png',
+  './OLHOABERTO.png',
+  './OLHOFECHADO_V2.png',
+  './atalho.png' // Adicionado o ícone de atalho para funcionar 100% offline
 ];
 
 self.addEventListener('install', evento => {
@@ -23,7 +24,7 @@ self.addEventListener('install', evento => {
 });
 
 self.addEventListener('activate', evento => {
-  // Varre a memória e apaga os caches antigos (v1, v2) para não dar conflito
+  // Varre a memória e apaga os caches antigos para não dar conflito
   evento.waitUntil(
     caches.keys().then(nomesCaches => {
       return Promise.all(
@@ -41,7 +42,8 @@ self.addEventListener('activate', evento => {
 
 self.addEventListener('fetch', evento => {
   evento.respondWith(
-    caches.match(evento.request)
+    // A MÁGICA OFFLINE AQUI: ignoreSearch: true faz o "?tela=planilha" ser ignorado e carregar o index.html offline!
+    caches.match(evento.request, { ignoreSearch: true })
       .then(resposta => resposta || fetch(evento.request))
   );
 });
