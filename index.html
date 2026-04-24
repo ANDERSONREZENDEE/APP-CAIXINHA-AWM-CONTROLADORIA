@@ -674,14 +674,17 @@
     }
 
     // ==========================================
-    // ENCERRAMENTO 100% OFFLINE (Sem recarregar a página)
+    // ENCERRAMENTO 100% OFFLINE E SEGURO
     // ==========================================
     function encerrarCaixinha() { 
         if(confirm("Zerar tudo? Você perderá todos os dados não enviados!")) { 
             
-            // 1. Apaga tudo da memória
-            localStorage.clear(); 
+            // 1. Apaga APENAS os dados do Caixinha da memória (Protege o App Refeição!)
+            localStorage.removeItem('wm_despesas'); 
             localStorage.removeItem('wm_sessao_ativa'); 
+            localStorage.removeItem('wm_num');
+            localStorage.removeItem('wm_gestor');
+            localStorage.removeItem('wm_anterior');
             
             // 2. Limpa variáveis e tabelas visualmente
             banco = [];
@@ -728,17 +731,15 @@
                 novoWorker.onstatechange = () => {
                     if (novoWorker.state === 'installed' && navigator.serviceWorker.controller) {
                         console.log("Nova versão detectada! Atualizando app silenciosamente...");
-                        caches.keys().then(keys => {
-                            Promise.all(keys.map(key => caches.delete(key))).then(() => {
-                                window.location.reload(true);
-                            });
-                        });
+                        // Substituído o trator de apagar caches por apenas um reload seguro
+                        window.location.reload(true);
                     }
                 };
             };
         }).catch(err => {
             console.log("Erro no Service Worker:", err);
         });
+        
         document.addEventListener("visibilitychange", () => {
             if (document.visibilityState === "visible") {
                 document.body.offsetHeight; // Força redesenho
