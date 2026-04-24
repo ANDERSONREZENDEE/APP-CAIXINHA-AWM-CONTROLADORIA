@@ -303,7 +303,8 @@
         <div class="area-acoes">
             <button class="btn-pausar" onclick="salvarPausar()">💾 Salvar e Pausar</button>
             <button class="btn-whats" onclick="gerarPDF()">📲 GERAR PDF PARA COMPARTILHAR</button>
-            <button class="btn-encerrar" onclick="solicitarSenhaAcao('encerrar')">🏁 Encerrar o Caixinha e Atualizar</button>
+            <button class="btn-encerrar" onclick="solicitarSenhaAcao('encerrar')">🏁 ENCERRAR O CAIXINHA</button>
+            <button class="btn-whats" onclick="atualizarAppSeguro()" style="background-color: #34495e; margin-top: 5px;">🔄 ATUALIZAR APLICATIVO</button>
         </div>
     </div>
 
@@ -390,7 +391,6 @@
                 document.getElementById('tela-principal').style.display = 'block';
             }
         } else {
-            // Se não tem sessão, esconde TUDO e força o login (impede a burla do botão voltar)
             document.getElementById('tela-principal').style.display = 'none';
             document.getElementById('tela-planilha').style.display = 'none';
             document.getElementById('tela-login').style.display = 'flex';
@@ -401,11 +401,9 @@
         verificarAtalhos(); 
     }
 
-    // Dispara quando carrega e quando puxa do cache
     document.addEventListener('DOMContentLoaded', inicializarAppOffline);
     window.addEventListener('pageshow', function(event) { inicializarAppOffline(); });
-    // Vigia o botão de voltar do navegador/celular para forçar a tela de login
-    window.addEventListener('popstate', function(event) { inicializarAppOffline(); });
+    window.addEventListener('popstate', function(event) { inicializarAppOffline(); }); 
 
     async function gerarHash(texto) {
         const encoder = new TextEncoder();
@@ -667,11 +665,7 @@
     }
 
     function excluir(index) { if(confirm("Excluir definitivamente?")) { banco.splice(index,1); localStorage.setItem('wm_despesas', JSON.stringify(banco)); abrirPlanilha(); calcularSaldo(); } }
-
-    function gerarPDF() { 
-        abrirPlanilha(); 
-        setTimeout(() => { window.print(); }, 1500); 
-    }
+    function gerarPDF() { abrirPlanilha(); setTimeout(() => { window.print(); }, 1500); }
 
     // ==========================================
     // ENCERRAMENTO 100% OFFLINE E SEGURO
@@ -679,7 +673,7 @@
     function encerrarCaixinha() { 
         if(confirm("Zerar tudo? Você perderá todos os dados não enviados!")) { 
             
-            // 1. Apaga APENAS os dados do Caixinha da memória (Protege o App Refeição!)
+            // 1. Apaga APENAS os dados do Caixinha da memória
             localStorage.removeItem('wm_despesas'); 
             localStorage.removeItem('wm_sessao_ativa'); 
             localStorage.removeItem('wm_num');
@@ -718,6 +712,27 @@
         } 
     }
 
+    // ==========================================
+    // 🔄 FUNÇÃO DE ATUALIZAÇÃO SEGURA DO APLICATIVO
+    // ==========================================
+    async function atualizarAppSeguro() {
+        if(confirm("Deseja buscar a versão mais recente do aplicativo? (Seus dados salvos NÃO serão perdidos)")) {
+            if ('caches' in window) {
+                try {
+                    const nomesCaches = await caches.keys();
+                    await Promise.all(nomesCaches.map(nome => {
+                        // Apaga SOMENTE o cache do Caixinha para forçar o download novo
+                        if (nome.startsWith('caixinha-wm-')) return caches.delete(nome);
+                    }));
+                } catch (e) {
+                    console.error("Erro ao limpar o cache isolado:", e);
+                }
+            }
+            // Recarrega a página forçando ignorar o cache antigo no navegador
+            window.location.href = window.location.pathname + '?atualizar=' + new Date().getTime();
+        }
+    }
+
     document.getElementById('num-caixinha').value = localStorage.getItem('wm_num') || '';
     document.getElementById('nome-gestor').value = localStorage.getItem('wm_gestor') || '';
     document.getElementById('saldo-anterior').value = localStorage.getItem('wm_anterior') || '';
@@ -731,7 +746,6 @@
                 novoWorker.onstatechange = () => {
                     if (novoWorker.state === 'installed' && navigator.serviceWorker.controller) {
                         console.log("Nova versão detectada! Atualizando app silenciosamente...");
-                        // Substituído o trator de apagar caches por apenas um reload seguro
                         window.location.reload(true);
                     }
                 };
@@ -742,7 +756,7 @@
         
         document.addEventListener("visibilitychange", () => {
             if (document.visibilityState === "visible") {
-                document.body.offsetHeight; // Força redesenho
+                document.body.offsetHeight; 
                 if (navigator.serviceWorker) {
                     navigator.serviceWorker.ready.then(reg => reg.update());
                 }
