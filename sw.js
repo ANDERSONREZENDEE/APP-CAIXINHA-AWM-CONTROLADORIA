@@ -1,4 +1,5 @@
-const CACHE_NAME = 'caixinha-wm-v5'; 
+const PREFIXO_CACHE = 'caixinha-wm-';
+const CACHE_NAME = PREFIXO_CACHE + 'v6'; 
 
 // Arquivos principais para guardar offline imediatamente
 const arquivosParaGuardar = [
@@ -19,18 +20,18 @@ self.addEventListener('install', evento => {
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(arquivosParaGuardar))
   );
-  // Força o Service Worker a assumir o controle imediatamente
   self.skipWaiting();
 });
 
 self.addEventListener('activate', evento => {
-  // Varre a memória e apaga os caches antigos para não dar conflito
   evento.waitUntil(
     caches.keys().then(nomesCaches => {
       return Promise.all(
         nomesCaches.map(nomeCache => {
-          if (nomeCache !== CACHE_NAME) {
-            console.log('Apagando cache antigo:', nomeCache);
+          // 🛡️ REGRA DE OURO: Só apaga se pertencer ao Caixinha E for uma versão velha
+          // O cache do app de Refeições fica 100% intocado!
+          if (nomeCache.startsWith(PREFIXO_CACHE) && nomeCache !== CACHE_NAME) {
+            console.log('Apagando cache antigo do Caixinha:', nomeCache);
             return caches.delete(nomeCache);
           }
         })
@@ -42,17 +43,14 @@ self.addEventListener('activate', evento => {
 
 self.addEventListener('fetch', evento => {
   evento.respondWith(
-    // 1. Tenta buscar no cache primeiro, ignorando as queries (ex: ?tela=planilha)
     caches.match(evento.request, { ignoreSearch: true })
       .then(respostaCache => {
         if (respostaCache) {
-          return respostaCache; // Achou no cofre, devolve super rápido
+          return respostaCache; 
         }
         
-        // 2. Se não estava no cache inicial, busca na internet
         return fetch(evento.request).then(respostaRede => {
           return caches.open(CACHE_NAME).then(cache => {
-            // 3. Salva uma cópia silenciosa no cache para a próxima vez (Cofre Dinâmico)
             if (evento.request.method === 'GET' && respostaRede.status === 200) {
               cache.put(evento.request, respostaRede.clone());
             }
@@ -60,7 +58,6 @@ self.addEventListener('fetch', evento => {
           });
         });
       }).catch(() => {
-        // 4. Último recurso: Se a internet caiu de vez e ele estava tentando abrir o app, força a tela principal
         if (evento.request.mode === 'navigate') {
           return caches.match('./index.html', { ignoreSearch: true });
         }
