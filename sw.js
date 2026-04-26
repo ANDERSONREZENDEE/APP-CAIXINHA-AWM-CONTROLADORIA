@@ -1,5 +1,5 @@
 const PREFIXO_CACHE = 'caixinha-wm-';
-const CACHE_NAME = PREFIXO_CACHE + 'v6'; 
+const CACHE_NAME = PREFIXO_CACHE + 'v7'; 
 
 // Arquivos principais para guardar offline imediatamente
 const arquivosParaGuardar = [
@@ -9,12 +9,9 @@ const arquivosParaGuardar = [
   './sw.js',
   './LOGOTIPO.jpg',
   './Captura de tela 2026-02-13 132630.jpg',
-  './icone_v3.png',
   './OLHOABERTO.png',
   './OLHOFECHADO_V2.png',
-  './atalho.png'
-   './corte.png'
-  
+  './corte.png'
 ];
 
 self.addEventListener('install', evento => {
