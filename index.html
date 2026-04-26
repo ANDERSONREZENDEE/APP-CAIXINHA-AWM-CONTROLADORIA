@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Caixinha WM - App e Ver Senha</title>
+    <title>Caixinha WM - Gestão Inteligente</title>
     
    <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icone_v3.png">
@@ -30,30 +30,57 @@
             --laranja-wm: #f39c12; 
             --verde-pos: #28a745;
             --vermelho-neg: #dc3545;
-            --fundo: #f4f7f6;
+            --fundo: #050e20; 
+            --preto-borda: #000000;
+        }
+
+        /* Classe para bloquear a rolagem do corpo nas telas de senha */
+        .no-scroll {
+            overflow: hidden !important;
+            height: 100% !important;
         }
 
         /* ========================================== */
-        /* 🛡️ BLOQUEIO DE SELEÇÃO DE TEXTO NO APP   */
+        /* 🛡️ FUNDO ESPACIAL ESCURO 🛡️ */
         /* ========================================== */
         body { 
-            font-family: Arial, sans-serif; background-color: #ccc; margin: 0; display: flex; justify-content: center; padding: 10px; 
-            -webkit-user-select: none; 
-            -moz-user-select: none; 
-            -ms-user-select: none; 
-            user-select: none; 
-            -webkit-touch-callout: none; 
+            font-family: Arial, sans-serif; margin: 0; display: flex; justify-content: center; padding: 10px; 
+            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-touch-callout: none;
+            
+            background: linear-gradient(135deg, var(--fundo) 0%, #1a0a2e 40%, #050e20 100%);
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(100, 0, 150, 0.4) 0%, transparent 60%),
+                radial-gradient(circle at 80% 70%, rgba(50, 0, 100, 0.3) 0%, transparent 50%),
+                radial-gradient(1px 1px at 10% 10%, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 30% 50%, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 70% 20%, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90% 80%, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 50% 90%, #fff, rgba(0,0,0,0));
+            background-attachment: fixed;
+            opacity: 0.8;
         }
         
         input, select, textarea {
-            -webkit-user-select: auto;
-            -moz-user-select: auto;
-            -ms-user-select: auto;
-            user-select: auto;
+            -webkit-user-select: auto; -moz-user-select: auto; -ms-user-select: auto; user-select: auto;
+            transition: border 0.3s ease;
         }
-        /* ========================================== */
 
-        .app-container { width: 100%; max-width: 700px; background-color: var(--fundo); min-height: 95vh; border: 8px solid; border-image: linear-gradient(to right, var(--azul-wm) 50%, var(--laranja-wm) 50%) 1; box-shadow: 0 5px 15px rgba(0,0,0,0.3); box-sizing: border-box; position: relative; }
+        /* ⚠️ CONTORNO BRANCO GROSSO (8px) + BORDA PRETA E LARANJA */
+        .app-container { 
+            width: 100%; max-width: 700px; background-color: #f4f7f6; min-height: 95vh; 
+            border: 8px solid; border-image: linear-gradient(to right, var(--preto-borda) 50%, var(--laranja-wm) 50%) 1; 
+            box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.95), 0 5px 25px rgba(0,0,0,0.8); 
+            box-sizing: border-box; position: relative; border-radius: 4px;
+        }
         
         header { background-color: white; color: var(--azul-wm); padding: 15px 10px; text-align: center; font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 10px; border-bottom: 2px solid #ddd; }
         
@@ -61,7 +88,7 @@
         .logo-wm { width: 40%; max-width: 150px; height: auto; pointer-events: none; } 
         .logo-controladoria { width: 40%; max-width: 150px; height: auto; border-radius: 4px; pointer-events: none; }
         
-        .titulo-header { font-size: 15px; color: var(--laranja-wm); margin-top: 5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
+        .titulo-header { font-size: 14px; color: var(--laranja-wm); margin-top: 5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
 
         .painel-saldo, .formulario, .area-acoes { background: white; margin: 10px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .linha-saldo { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 14px; }
@@ -127,17 +154,20 @@
         #modal-foto { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; flex-direction: column; }
         #foto-ampliada { max-width: 90%; max-height: 80%; border: 3px solid white; pointer-events: none; }
 
-        /* ESTILOS DA TELA DE LOGIN E MODAL DE AÇÃO */
+        /* ========================================== */
+        /* 🛡️ TELA DE LOGIN E MODAL 100% PRETO E OPACO 🛡️ */
+        /* ========================================== */
         #tela-login, #modal-acao {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--azul-wm);
+            background: #000000; 
             z-index: 9999;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-        #modal-acao { background: rgba(26, 35, 58, 0.9); display: none; }
+        #modal-acao { display: none; }
+
         .login-box {
             background: white; padding: 25px; border-radius: 10px; width: 85%; max-width: 320px;
-            text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            text-align: center; box-shadow: 0 4px 15px rgba(255,255,255,0.1);
         }
         .login-box img { max-height: 60px; margin-bottom: 10px; object-fit: contain; pointer-events: none; }
     </style>
@@ -173,7 +203,7 @@
 
         <div style="display: flex; gap: 10px; width: 100%;">
             <button class="btn-salvar" style="flex: 1; font-size: 14px; padding: 12px; margin-top: 5px;" onclick="validarSenhaAcao()">CONFIRMAR</button>
-            <button class="btn-encerrar" style="flex: 1; font-size: 14px; padding: 12px; background-color: #777; margin-top: 5px;" onclick="fecharModalAcao()">CANCELAR</button>
+            <button class="btn-salvar" style="flex: 1; font-size: 14px; padding: 12px; margin-top: 5px;" onclick="fecharModalAcao()">CANCELAR</button>
         </div>
         <p id="erro-senha-acao" style="color: red; font-size: 13px; font-weight: bold; display: none; margin-top: 15px;">❌ Senha incorreta!</p>
     </div>
@@ -183,8 +213,8 @@
     <div id="tela-principal" style="display:none;">
         <header>
             <div class="logos-container">
-                <img src="LOGOTIPO.jpg" alt="WM" class="logo-wm">
-                <img src="Captura de tela 2026-02-13 132630.jpg" alt="Anderson" class="logo-controladoria">
+                <img src="LOGOTIPO.jpg" alt="WM">
+                <img src="Captura de tela 2026-02-13 132630.jpg" alt="Controladoria" class="logo-controladoria">
             </div>
             <div class="titulo-header">✨ GESTÃO INTELIGENTE DE CAIXINHA ✨</div>
         </header>
@@ -224,11 +254,13 @@
             </div>
             
             <div class="saldo-atual" id="saldo-atual-display">SALDO ATUAL: R$ 0,00</div>
+            <p style="text-align: center; font-size: 11px; color: #777; margin-top: 5px;" id="display-device-id"></p>
         </div>
 
         <div class="formulario">
-            <label>Categoria:</label>
+            <label>Categoria: <span style="color:red">*</span></label>
             <select id="categoria">
+                <option value="" disabled selected>--- Selecione a Categoria ---</option>
                 <option value="CRÉDITO WM CONSTRUÇÕES E MONTAGENS">CRÉDITO WM CONSTRUÇÕES E MONTAGENS</option>
                 <option value="Alimentação">Alimentação</option>
                 <option value="Hospedagem">Hospedagem</option>
@@ -236,11 +268,12 @@
                 <option value="Combustível">Combustível</option>
                 <option value="Outras Despesas">Outras Despesas</option>
             </select>
-            <label>Data:</label>
+            
+            <label>Data: <span style="color:red">*</span></label>
             <input type="date" id="data">
             
             <label>Fornecedor: <span style="color:red">*</span></label>
-            <input type="text" id="fornecedor" placeholder="Ex: Posto Ipiranga, WM Construções e Montagens...">
+            <input type="text" id="fornecedor" placeholder="Ex: Posto Ipiranga, WM Construções...">
             
             <label>Descrição do Gasto/Crédito: <span style="color:red">*</span></label>
             <input type="text" id="desc" placeholder="Ex: Gasto com almoço, Crédito WM, etc...">
@@ -296,34 +329,34 @@
                 <input type="file" id="foto-pagto" accept="image/*" capture="environment">
             </div>
 
-            <button class="btn-salvar" id="btn-salvar-principal" onclick="salvarDespesa()">➕ Salvar na Lista</button>
-            <button class="btn-ver-planilha" onclick="abrirPlanilha()">📊 Ver Planilha</button>
+            <button class="btn-salvar" id="btn-salvar-principal" onclick="salvarDespesa()">✅ Salvar o lançamento</button>
+            <button class="btn-ver-planilha" onclick="abrirPlanilha()">📊 Ver os lançamentos</button>
         </div>
 
         <div class="area-acoes">
-            <button class="btn-pausar" onclick="salvarPausar()">💾 Salvar e Pausar</button>
-            <button class="btn-whats" onclick="gerarPDF()">📲 GERAR PDF PARA COMPARTILHAR</button>
-            <button class="btn-encerrar" onclick="solicitarSenhaAcao('encerrar')">🏁 ENCERRAR O CAIXINHA</button>
+            <button class="btn-pausar" onclick="sairDoApp()">🚪 SAIR</button>
+            <button class="btn-whats" onclick="gerarPDF()">📲 GERAR RELATÓRIO PDF</button>
+            <button class="btn-encerrar" onclick="solicitarSenhaAcao('encerrar')">🗑️ APAGAR TUDO E SAIR</button>
             <button class="btn-whats" onclick="atualizarAppSeguro()" style="background-color: #34495e; margin-top: 5px;">🔄 ATUALIZAR APLICATIVO</button>
         </div>
     </div>
 
     <div id="tela-planilha">
-        <button class="btn-voltar" onclick="voltarParaFormulario()" style="width: 100%; padding: 10px; margin-bottom: 10px; font-weight: bold; background: #555; color: white; border: none; border-radius: 5px; cursor: pointer;">⬅ Voltar para Lançamentos</button>
-        
+        <button class="btn-voltar" onclick="voltarParaFormulario()" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #555; color: white; border: none; border-radius: 5px;">⬅ Voltar para Lançamentos</button>
         <div class="cabecalho-oficial" id="cabecalho-pdf">
             <div class="cabecalho-topo">
                 <img src="LOGOTIPO.jpg" class="img-cabecalho">
-                <div class="texto-cabecalho">
-                    <h3>RELATÓRIO DE CAIXINHA</h3>
-                    <small id="print-data-emissao"></small>
+                <div style="text-align:center;">
+                    <h3 style="margin:0;">RELATÓRIO DE CAIXINHA</h3>
+                    <small id="print-data-emissao"></small><br>
+                    <small id="print-device-id" style="color: #888;"></small>
                 </div>
                 <img src="Captura de tela 2026-02-13 132630.jpg" class="img-cabecalho">
             </div>
             <div class="info-box">
                 <div>
                     <strong>EMPRESA:</strong> WM CONSTRUÇÕES E MONTAGENS<br>
-                    <strong>AUDITOR:</strong> Anderson e/ou Flávio<br>
+                    <strong>AUDITOR:</strong> Anderson<br>
                     <strong>GESTOR:</strong> <span id="print-gestor"></span><br>
                     <strong>Nº DO CAIXINHA:</strong> <span id="print-num"></span>
                 </div>
@@ -381,12 +414,44 @@
 
     let acaoPendente = '';
 
+    // Função utilitária para travar/destravar o scroll do corpo
+    function toggleBodyScroll(lock) {
+        if (lock) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+    }
+
+    // Função de Guia: Rola a tela até o erro e destaca em vermelho
+    function focarErro(idOriginal, mensagem) {
+        alert(mensagem);
+        let elemento = document.getElementById(idOriginal);
+        if(elemento) {
+            elemento.scrollIntoView({behavior: "smooth", block: "center"});
+            elemento.focus();
+            let bordaOriginal = elemento.style.border;
+            elemento.style.border = "2px solid red";
+            setTimeout(() => { elemento.style.border = bordaOriginal; }, 3000);
+        }
+    }
+
+    function getDeviceID() {
+        let id = localStorage.getItem('wm_device_id');
+        if (!id) {
+            id = 'ID-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            localStorage.setItem('wm_device_id', id);
+        }
+        return id;
+    }
+
     // ==========================================
     // INICIALIZAÇÃO ROBUSTA (Bloqueia o botão voltar)
     // ==========================================
     function inicializarAppOffline() {
         if (localStorage.getItem('wm_sessao_ativa') === 'true') {
             document.getElementById('tela-login').style.display = 'none';
+            toggleBodyScroll(false);
             if (document.getElementById('tela-planilha').style.display !== 'block') {
                 document.getElementById('tela-principal').style.display = 'block';
             }
@@ -394,6 +459,7 @@
             document.getElementById('tela-principal').style.display = 'none';
             document.getElementById('tela-planilha').style.display = 'none';
             document.getElementById('tela-login').style.display = 'flex';
+            toggleBodyScroll(true);
         }
         
         calcularSaldo();
@@ -424,6 +490,7 @@
             document.getElementById('tela-principal').style.display = 'block';
             document.getElementById('senha-input').value = ''; 
             document.getElementById('erro-login').style.display = 'none';
+            toggleBodyScroll(false);
         } else {
             document.getElementById('erro-login').style.display = 'block';
         }
@@ -442,9 +509,18 @@
         }
     }
 
-    function salvarPausar() {
-        localStorage.setItem('wm_sessao_ativa', 'true');
-        alert('✅ RASCUNHO SALVO COM SUCESSO');
+    function sairDoApp() {
+        salvarCabecalho(); // Salva rascunhos do cabeçalho
+        localStorage.removeItem('wm_sessao_ativa');
+        
+        document.getElementById('tela-principal').style.display = 'none';
+        document.getElementById('tela-planilha').style.display = 'none';
+        
+        document.getElementById('tela-login').style.display = 'flex';
+        document.getElementById('senha-input').value = '';
+        toggleBodyScroll(true);
+        
+        alert('✅ Rascunhos salvos. Sessão encerrada.');
     }
 
     // --- FUNÇÕES DE MODAL DE SENHA PARA AÇÕES ---
@@ -453,15 +529,17 @@
         document.getElementById('senha-acao-input').value = '';
         document.getElementById('erro-senha-acao').style.display = 'none';
         document.getElementById('modal-acao').style.display = 'flex';
+        toggleBodyScroll(true);
 
         if(acao === 'encerrar') {
-            document.getElementById('texto-acao-modal').innerText = "Senha necessária para ENCERRAR O CAIXINHA";
+            document.getElementById('texto-acao-modal').innerText = "Senha necessária para APAGAR TUDO E SAIR";
         }
     }
 
     function fecharModalAcao() {
         document.getElementById('modal-acao').style.display = 'none';
         acaoPendente = '';
+        toggleBodyScroll(false);
     }
 
     function mostrarSenhaAcao() {
@@ -518,6 +596,8 @@
         let display = document.getElementById('saldo-atual-display');
         display.innerText = "SALDO ATUAL: " + total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         display.className = total >= 0 ? "saldo-atual positivo" : "saldo-atual negativo";
+
+        document.getElementById('display-device-id').innerText = "APARELHO ID: " + getDeviceID();
     }
 
     function comprimirImagem(file) {
@@ -550,20 +630,24 @@
     }
 
     async function salvarDespesa() {
-        let valor = parseFloat(document.getElementById('valor').value);
+        let categoria = document.getElementById('categoria').value;
+        let valorStr = document.getElementById('valor').value;
+        let valor = parseFloat(valorStr);
         let desc = document.getElementById('desc').value;
         let fornecedor = document.getElementById('fornecedor').value;
         
-        if(!valor || !desc || !fornecedor) {
-            return alert("⚠️ Atenção: Preencha o Fornecedor, a Descrição e o Valor para salvar!");
-        }
+        // Auto-Foco de Erros
+        if(!categoria) return focarErro('categoria', "⚠️ Atenção: Selecione a Categoria!");
+        if(!fornecedor) return focarErro('fornecedor', "⚠️ Atenção: Preencha o Fornecedor!");
+        if(!desc) return focarErro('desc', "⚠️ Atenção: Preencha a Descrição do Gasto/Crédito!");
+        if(!valorStr || isNaN(valor)) return focarErro('valor', "⚠️ Atenção: Preencha o Valor!");
         
         document.getElementById('btn-salvar-principal').innerText = "⏳ Processando...";
         let fDoc = await comprimirImagem(document.getElementById('foto-doc').files[0]);
         let fPag = await comprimirImagem(document.getElementById('foto-pagto').files[0]);
 
         let item = {
-            categoria: document.getElementById('categoria').value,
+            categoria: categoria,
             data: document.getElementById('data').value.split('-').reverse().join('/'),
             fornecedor: fornecedor,
             descricao: desc,
@@ -579,13 +663,16 @@
             if (!item.fotoPagto) item.fotoPagto = banco[indiceEdicao].fotoPagto;
             banco[indiceEdicao] = item;
             indiceEdicao = -1; 
-            document.getElementById('btn-salvar-principal').innerText = "➕ Salvar na Lista";
+            document.getElementById('btn-salvar-principal').innerText = "✅ Salvar o lançamento";
         } else {
             banco.push(item);
         }
 
         try {
             localStorage.setItem('wm_despesas', JSON.stringify(banco));
+            
+            // Limpa os campos após salvar (agora limpando também a Categoria)
+            document.getElementById('categoria').value = ''; 
             document.getElementById('desc').value = ''; 
             document.getElementById('valor').value = ''; 
             document.getElementById('fornecedor').value = '';
@@ -593,12 +680,13 @@
             document.getElementById('foto-pagto').value = '';
             document.getElementById('tipo-doc').selectedIndex = 0;
             document.getElementById('forma-pagto').selectedIndex = 0;
-            document.getElementById('btn-salvar-principal').innerText = "➕ Salvar na Lista";
+            
+            document.getElementById('btn-salvar-principal').innerText = "✅ Salvar o lançamento";
             calcularSaldo(); 
-            alert("✔️ Lançamento Salvo!");
+            alert("✔️ Lançamento Salvo com Sucesso!");
         } catch (e) {
             alert("❌ Memória cheia! Exclua itens antigos ou encerre o caixinha.");
-            document.getElementById('btn-salvar-principal').innerText = "➕ Salvar na Lista";
+            document.getElementById('btn-salvar-principal').innerText = "✅ Salvar o lançamento";
         }
     }
 
@@ -622,7 +710,8 @@
         printFinal.innerText = displayAtual.innerText.replace("SALDO ATUAL: ","");
         printFinal.className = displayAtual.className.includes('positivo') ? "positivo" : "negativo";
         
-        document.getElementById('print-data-emissao').innerText = "Emitido em: " + new Date().toLocaleDateString() + " às " + new Date().toLocaleTimeString();
+        document.getElementById('print-data-emissao').innerText = "Emitido: " + new Date().toLocaleDateString() + " às " + new Date().toLocaleTimeString();
+        document.getElementById('print-device-id').innerText = "APARELHO ID: " + getDeviceID();
 
         let corpo = document.getElementById('corpo-tabela'); 
         corpo.innerHTML = "";
@@ -671,7 +760,7 @@
     // ENCERRAMENTO 100% OFFLINE E SEGURO
     // ==========================================
     function encerrarCaixinha() { 
-        if(confirm("Zerar tudo? Você perderá todos os dados não enviados!")) { 
+        if(confirm("Zerar tudo? Você perderá todos os dados não salvos no PDF!")) { 
             
             // 1. Apaga APENAS os dados do Caixinha da memória
             localStorage.removeItem('wm_despesas'); 
@@ -689,6 +778,7 @@
             document.getElementById('num-caixinha').value = '';
             document.getElementById('nome-gestor').value = '';
             document.getElementById('saldo-anterior').value = '';
+            document.getElementById('categoria').value = '';
             document.getElementById('desc').value = ''; 
             document.getElementById('valor').value = ''; 
             document.getElementById('fornecedor').value = '';
@@ -704,11 +794,12 @@
             document.getElementById('tela-planilha').style.display = 'none';
             document.getElementById('tela-login').style.display = 'flex';
             
-            // 5. Zera a senha
+            // 5. Zera a senha e trava scroll
+            toggleBodyScroll(true);
             document.getElementById('senha-input').value = '';
             document.getElementById('erro-login').style.display = 'none';
             
-            alert("✅ Caixinha encerrado, dados e sessão apagados com sucesso!");
+            alert("✅ Tudo zerado e sessão apagada com sucesso!");
         } 
     }
 
@@ -716,6 +807,11 @@
     // 🔄 FUNÇÃO DE ATUALIZAÇÃO SEGURA DO APLICATIVO
     // ==========================================
     async function atualizarAppSeguro() {
+        if (!navigator.onLine) {
+            alert("❌ O aplicativo só atualiza online!");
+            return;
+        }
+
         if(confirm("Deseja buscar a versão mais recente do aplicativo? (Seus dados salvos NÃO serão perdidos)")) {
             if ('caches' in window) {
                 try {
@@ -728,7 +824,7 @@
                     console.error("Erro ao limpar o cache isolado:", e);
                 }
             }
-            // Recarrega a página forçando ignorar o cache antigo no navegador
+            alert("✔️ Aplicativo atualizado!");
             window.location.href = window.location.pathname + '?atualizar=' + new Date().getTime();
         }
     }
@@ -746,7 +842,6 @@
                 novoWorker.onstatechange = () => {
                     if (novoWorker.state === 'installed' && navigator.serviceWorker.controller) {
                         console.log("Nova versão detectada! Atualizando app silenciosamente...");
-                        window.location.reload(true);
                     }
                 };
             };
