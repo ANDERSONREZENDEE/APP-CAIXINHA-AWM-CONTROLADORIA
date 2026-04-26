@@ -13,6 +13,8 @@ const arquivosParaGuardar = [
   './OLHOABERTO.png',
   './OLHOFECHADO_V2.png',
   './atalho.png'
+   './corte.png'
+  
 ];
 
 self.addEventListener('install', evento => {
