@@ -1,5 +1,5 @@
 const PREFIXO_CACHE = 'caixinha-wm-';
-const CACHE_NAME = PREFIXO_CACHE + 'v8'; 
+const CACHE_NAME = PREFIXO_CACHE + 'v10'; 
 
 const arquivosParaGuardar = [
   './',
@@ -26,7 +26,7 @@ self.addEventListener('activate', evento => {
     caches.keys().then(nomesCaches => {
       return Promise.all(
         nomesCaches.map(nomeCache => {
-          // Mantém a regra de segurança para não afetar outros apps (como o Refeições)
+          // Mantém a regra de segurança para não afetar outros apps da WM
           if (nomeCache.startsWith(PREFIXO_CACHE) && nomeCache !== CACHE_NAME) {
             console.log('Atualizando sistema: Apagando cache antigo:', nomeCache);
             return caches.delete(nomeCache);
