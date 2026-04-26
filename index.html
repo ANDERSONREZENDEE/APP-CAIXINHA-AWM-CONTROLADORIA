@@ -77,7 +77,7 @@
         .btn-ver-planilha { background-color: var(--laranja-wm); color: white; border: none; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 5px;}
         
         .area-acoes { display: flex; flex-wrap: wrap; gap: 10px; }
-        .btn-pausar { background-color: #17a2b8; color: white; border: none; padding: 12px; font-size: 14px; border-radius: 5px; flex: 1; font-weight: bold; cursor: pointer;}
+        .btn-pausar { background-color: #e67e22; color: white; border: none; padding: 12px; font-size: 14px; border-radius: 5px; flex: 1; font-weight: bold; cursor: pointer;}
         .btn-whats { background-color: #25D366; color: white; border: none; padding: 15px; font-size: 14px; border-radius: 5px; flex: 1 1 100%; font-weight: bold; cursor: pointer; }
         .btn-encerrar { background-color: var(--vermelho-neg); color: white; border: none; padding: 12px; font-size: 13px; border-radius: 5px; flex: 1 1 100%; font-weight: bold; margin-top: 5px; cursor: pointer;}
 
@@ -178,18 +178,18 @@
                 <img src="LOGOTIPO.jpg" alt="WM" class="logo-wm">
                 <img src="Captura de tela 2026-02-13 132630.jpg" alt="Anderson" class="logo-controladoria">
             </div>
-            <div class="titulo-header">✨ GESTÃO INTELIGENTE DE CAIXINHA / VERSÃO 1✨</div>
+            <div class="titulo-header">✨ GESTÃO INTELIGENTE DE CAIXINHA ✨</div>
         </header>
 
         <div class="painel-saldo">
             <div style="background: #fdf5e6; padding: 10px; border-radius: 4px;">
                 <div class="linha-saldo">
                     <label style="font-weight: bold; text-transform: uppercase;">Nº DO CAIXINHA: <span style="color:red">*</span></label>
-                    <input type="text" id="num-caixinha" placeholder="Ex: 13" style="width: 80px; text-align: center; font-weight: bold;" onchange="salvarCabecalho()">
+                    <input type="number" id="num-caixinha" placeholder="Ex: 13" style="width: 80px; text-align: center; font-weight: bold;" onchange="salvarCabecalho()" required>
                 </div>
                 <div class="linha-saldo">
                     <label style="font-weight: bold; text-transform: uppercase;">GESTOR: <span style="color:red">*</span></label>
-                    <input type="text" id="nome-gestor" placeholder="Nome do Gestor" style="width: 150px;" onchange="salvarCabecalho()">
+                    <input type="text" id="nome-gestor" placeholder="Nome do Gestor" style="width: 150px;" onchange="salvarCabecalho()" required>
                 </div>
                 <div class="linha-saldo" style="border-top: 1px solid #ddd; padding-top: 5px;">
                     <span style="font-weight: bold; text-transform: uppercase; font-size: 12px; color: #555;">AUDITOR:</span>
@@ -202,7 +202,7 @@
                     <label style="margin:0; font-weight: bold;">Saldo Anterior (R$): <span style="color:red">*</span></label>
                     <span style="font-size: 10px; color: #777; font-weight: normal;">(Se for negativo, colocar o sinal de -)</span>
                 </div>
-                <input type="number" id="saldo-anterior" step="0.01" style="width: 110px; text-align: center; font-weight: bold;" onchange="salvarCabecalho()">
+                <input type="number" id="saldo-anterior" step="0.01" style="width: 110px; text-align: center; font-weight: bold;" onchange="salvarCabecalho()" required>
             </div>
             
             <div class="linha-saldo" style="color: var(--verde-pos); margin-top: 10px;">
@@ -219,8 +219,8 @@
         </div>
 
         <div class="formulario">
-            <label>Categoria:</label>
-            <select id="categoria">
+            <label>Categoria: <span style="color:red">*</span></label>
+            <select id="categoria" required>
                 <option value="CRÉDITO WM CONSTRUÇÕES E MONTAGENS">CRÉDITO WM CONSTRUÇÕES E MONTAGENS</option>
                 <option value="Alimentação">Alimentação</option>
                 <option value="Hospedagem">Hospedagem</option>
@@ -228,21 +228,22 @@
                 <option value="Combustível">Combustível</option>
                 <option value="Outras Despesas">Outras Despesas</option>
             </select>
-            <label>Data:</label>
-            <input type="date" id="data">
+            
+            <label>Data: <span style="color:red">*</span></label>
+            <input type="date" id="data" required>
             
             <label>Fornecedor: <span style="color:red">*</span></label>
-            <input type="text" id="fornecedor" placeholder="Ex: Posto Ipiranga, WM Construções e Montagens...">
+            <input type="text" id="fornecedor" placeholder="Ex: Posto Ipiranga, WM Construções e Montagens..." required>
             
             <label>Descrição do Gasto/Crédito: <span style="color:red">*</span></label>
-            <input type="text" id="desc" placeholder="Ex: Gasto com almoço, Crédito WM, etc...">
+            <input type="text" id="desc" placeholder="Ex: Gasto com almoço, Crédito WM, etc..." required>
             
             <label>Valor (R$): <span style="color:red">*</span></label>
-            <input type="number" id="valor" step="0.01" placeholder="0.00">
+            <input type="number" id="valor" step="0.01" placeholder="0.00" required>
 
             <div style="background: #f9f9f9; padding: 10px; border-radius: 5px; border: 1px solid #eee;">
                 <label style="font-weight: bold;">Tipo de Documento Fiscal: <span style="color:red">*</span></label>
-                <select id="tipo-doc">
+                <select id="tipo-doc" required>
                     <option value="">-- SELECIONE O DOCUMENTO --</option>
                     <option value="🚨 SEM DOCUMENTO FISCAL (FALTANDO)">🚨 SEM DOCUMENTO FISCAL (FALTANDO)</option>
                     <option value="NF-e - Nota Fiscal Eletrônica">NF-e - Nota Fiscal Eletrônica</option>
@@ -261,17 +262,20 @@
                     <option value="Recibo">Recibo</option>
                     <option value="Comanda">Comanda</option>
                     <option value="Orçamento">Orçamento</option>            
-
+                    <option value="Conta de Energia Elétrica">Conta de Energia Elétrica</option>
+                    <option value="Conta de Água/Esgoto">Conta de Água/Esgoto</option>
+                    <option value="Conta de Telecomunicação/Internet">Conta de Telecomunicação/Internet</option>
+                    <option value="Conta de Fornecimento de Gás">Conta de Fornecimento de Gás</option>
                 </select>
                 
                 <label>📸 Foto da Nota Fiscal: <span style="color:red">*</span></label>
-                <span style="font-size: 11px; color: #666; display: block; margin-bottom: 5px; font-style: italic;">Anexe o documento fiscal ou recibo.</span>
-                <input type="file" id="foto-doc" accept="image/*" capture="environment">
+                <span style="font-size: 11px; color: #666; display: block; margin-bottom: 5px; font-style: italic;">Obrigatório: Tire a foto ou anexe o documento fiscal.</span>
+                <input type="file" id="foto-doc" accept="image/*" capture="environment" required>
             </div>
 
             <div style="background: #f9f9f9; padding: 10px; border-radius: 5px; border: 1px solid #eee; margin-top: 10px;">
                 <label style="font-weight: bold;">Forma de Pagamento: <span style="color:red">*</span></label>
-                <select id="forma-pagto">
+                <select id="forma-pagto" required>
                     <option value="">-- SELECIONE A FORMA --</option>
                     <option value="🚨 SEM COMPROVANTE PAGTO (FALTANDO)">🚨 SEM COMPROVANTE PAGTO (FALTANDO)</option>
                     <option value="PIX">PIX</option>
@@ -287,8 +291,8 @@
                 </select>
 
                 <label>📸 Foto do Pagamento: <span style="color:red">*</span></label>
-                <span style="font-size: 11px; color: #666; display: block; margin-bottom: 5px; font-style: italic;">Anexe o comprovante de pagamento.</span>
-                <input type="file" id="foto-pagto" accept="image/*" capture="environment">
+                <span style="font-size: 11px; color: #666; display: block; margin-bottom: 5px; font-style: italic;">Obrigatório: Anexe o comprovante de pagamento.</span>
+                <input type="file" id="foto-pagto" accept="image/*" capture="environment" required>
             </div>
 
             <button class="btn-salvar" id="btn-salvar-principal" onclick="salvarDespesa()">➕ Salvar na Lista</button>
@@ -296,7 +300,7 @@
         </div>
 
         <div class="area-acoes">
-            <button class="btn-pausar" onclick="salvarPausar()">💾 Salvar e Pausar</button>
+            <button class="btn-pausar" onclick="salvarPausar()">🚪 SAIR DO APP (PAUSAR)</button>
             <button class="btn-whats" onclick="gerarPDF()">📲 GERAR PDF PARA COMPARTILHAR</button>
             <button class="btn-encerrar" onclick="solicitarSenhaAcao('encerrar')">🏁 ENCERRAR O CAIXINHA</button>
             <button class="btn-whats" onclick="atualizarAppSeguro()" style="background-color: #34495e; margin-top: 5px;">🔄 ATUALIZAR APLICATIVO</button>
@@ -319,7 +323,7 @@
             <div class="info-box">
                 <div>
                     <strong>EMPRESA:</strong> WM CONSTRUÇÕES E MONTAGENS<br>
-                    <strong>AUDITOR:</strong> Anderson <br>
+                    <strong>AUDITOR:</strong> Anderson e/ou Flávio<br>
                     <strong>GESTOR:</strong> <span id="print-gestor"></span><br>
                     <strong>Nº DO CAIXINHA:</strong> <span id="print-num"></span>
                 </div>
@@ -438,9 +442,18 @@
         }
     }
 
+    // ==========================================
+    // LOGICA CORRIGIDA: SAIR DO APP (PAUSAR SESSÃO)
+    // ==========================================
     function salvarPausar() {
-        localStorage.setItem('wm_sessao_ativa', 'true');
-        alert('✅ RASCUNHO SALVO COM SUCESSO');
+        localStorage.removeItem('wm_sessao_ativa'); // Remove a permissão de acesso direto
+        
+        document.getElementById('tela-principal').style.display = 'none';
+        document.getElementById('tela-planilha').style.display = 'none';
+        document.getElementById('tela-login').style.display = 'flex'; // Volta para a tela de senha
+        
+        document.getElementById('senha-input').value = ''; // Limpa o campo
+        alert('✅ Sessão pausada com sucesso. Você saiu do aplicativo!');
     }
 
     // --- FUNÇÕES DE MODAL DE SENHA PARA AÇÕES ---
@@ -550,6 +563,7 @@
         let gestor = document.getElementById('nome-gestor').value;
         let saldoAnterior = document.getElementById('saldo-anterior').value;
 
+        // VALIDAÇÃO EXTREMA DO CABEÇALHO
         if(!numCaixinha || !gestor || saldoAnterior === "") {
             return alert("⚠️ Atenção: Preencha o Nº do Caixinha, Gestor e Saldo Anterior no topo da tela antes de salvar um lançamento!");
         }
@@ -560,16 +574,17 @@
         let tipoDoc = document.getElementById('tipo-doc').value;
         let formaPagto = document.getElementById('forma-pagto').value;
         
+        // VALIDAÇÃO EXTREMA DOS CAMPOS DE TEXTO E SELECTS
         if(!valor || !desc || !fornecedor || tipoDoc === "" || formaPagto === "") {
-            return alert("⚠️ Atenção: Preencha todos os campos obrigatórios (* Fornecedor, Descrição, Valor, Tipo de Documento e Forma de Pagamento) para salvar!");
+            return alert("⚠️ Atenção: Preencha todos os campos obrigatórios (Fornecedor, Descrição, Valor, Tipo de Documento e Forma de Pagamento) para salvar!");
         }
 
         let fotoDocFile = document.getElementById('foto-doc').files[0];
         let fotoPagtoFile = document.getElementById('foto-pagto').files[0];
 
-        // Trava para exigir a foto caso seja um lançamento novo
+        // VALIDAÇÃO EXTREMA DAS FOTOS (Impede salvar sem os dois arquivos, caso seja um novo registro)
         if (indiceEdicao === -1 && (!fotoDocFile || !fotoPagtoFile)) {
-            return alert("⚠️ Atenção: Você precisa anexar a Foto da Nota Fiscal e a Foto do Pagamento para salvar o lançamento!");
+            return alert("⚠️ ATENÇÃO: É OBRIGATÓRIO anexar a Foto da Nota Fiscal e a Foto do Pagamento para conseguir salvar o lançamento!");
         }
         
         document.getElementById('btn-salvar-principal').innerText = "⏳ Processando...";
