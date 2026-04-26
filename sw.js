@@ -1,5 +1,5 @@
 const PREFIXO_CACHE = 'caixinha-wm-';
-const CACHE_NAME = PREFIXO_CACHE + 'v10'; 
+const CACHE_NAME = PREFIXO_CACHE + 'v11'; 
 
 const arquivosParaGuardar = [
   './',
@@ -10,7 +10,7 @@ const arquivosParaGuardar = [
   './Captura de tela 2026-02-13 132630.jpg',
   './OLHOABERTO.png',
   './OLHOFECHADO_V2.png',
-  './corte.png'
+  './icone_caixinha.png'
 ];
 
 self.addEventListener('install', evento => {
@@ -26,7 +26,6 @@ self.addEventListener('activate', evento => {
     caches.keys().then(nomesCaches => {
       return Promise.all(
         nomesCaches.map(nomeCache => {
-          // Mantém a regra de segurança para não afetar outros apps da WM
           if (nomeCache.startsWith(PREFIXO_CACHE) && nomeCache !== CACHE_NAME) {
             console.log('Atualizando sistema: Apagando cache antigo:', nomeCache);
             return caches.delete(nomeCache);
