@@ -1,7 +1,6 @@
 const PREFIXO_CACHE = 'caixinha-wm-';
-const CACHE_NAME = PREFIXO_CACHE + 'v7'; 
+const CACHE_NAME = PREFIXO_CACHE + 'v8'; 
 
-// Arquivos principais para guardar offline imediatamente
 const arquivosParaGuardar = [
   './',
   './index.html',
@@ -27,10 +26,9 @@ self.addEventListener('activate', evento => {
     caches.keys().then(nomesCaches => {
       return Promise.all(
         nomesCaches.map(nomeCache => {
-          // 🛡️ REGRA DE OURO: Só apaga se pertencer ao Caixinha E for uma versão velha
-          // O cache do app de Refeições fica 100% intocado!
+          // Mantém a regra de segurança para não afetar outros apps (como o Refeições)
           if (nomeCache.startsWith(PREFIXO_CACHE) && nomeCache !== CACHE_NAME) {
-            console.log('Apagando cache antigo do Caixinha:', nomeCache);
+            console.log('Atualizando sistema: Apagando cache antigo:', nomeCache);
             return caches.delete(nomeCache);
           }
         })
