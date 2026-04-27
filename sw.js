@@ -1,5 +1,5 @@
 const PREFIXO_CACHE = 'caixinha-wm-';
-const CACHE_NAME = PREFIXO_CACHE + 'v15'; 
+const CACHE_NAME = PREFIXO_CACHE + 'v16'; 
 
 const arquivosParaGuardar = [
   './',
@@ -11,9 +11,9 @@ const arquivosParaGuardar = [
   './OLHOABERTO.png',
   './OLHOFECHADO_V2.png',
   './icone_principal_v14.png',
-  './icone_atalho_caixa.png'
+  './atalho_caixa_192.png'
 ];
-// ... O resto do sw.js do Caixinha continua igual ...
+// ... O resto do código sw.js para baixo continua igual ...
 self.addEventListener('install', evento => {
   evento.waitUntil(
     caches.open(CACHE_NAME)
