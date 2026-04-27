@@ -1,5 +1,5 @@
 const PREFIXO_CACHE = 'caixinha-wm-';
-const CACHE_NAME = PREFIXO_CACHE + 'v18';
+const CACHE_NAME = PREFIXO_CACHE + 'v19';
 
 const arquivosParaGuardar = [
   './',
@@ -27,6 +27,7 @@ self.addEventListener('activate', evento => {
       return Promise.all(
         nomesCaches.map(nomeCache => {
           if (nomeCache.startsWith(PREFIXO_CACHE) && nomeCache !== CACHE_NAME) {
+            console.log('🗑️ Apagando cache antigo:', nomeCache);
             return caches.delete(nomeCache);
           }
         })
@@ -40,17 +41,24 @@ self.addEventListener('fetch', evento => {
   evento.respondWith(
     caches.match(evento.request, { ignoreSearch: true })
       .then(respostaCache => {
-        if (respostaCache) return respostaCache;
+        if (respostaCache) {
+          return respostaCache;
+        }
 
         return fetch(evento.request).then(respostaRede => {
           return caches.open(CACHE_NAME).then(cache => {
-            if (evento.request.method === 'GET' && respostaRede.status === 200) {
+            if (
+              evento.request.method === 'GET' &&
+              respostaRede &&
+              respostaRede.status === 200
+            ) {
               cache.put(evento.request, respostaRede.clone());
             }
             return respostaRede;
           });
         });
-      }).catch(() => {
+      })
+      .catch(() => {
         if (evento.request.mode === 'navigate') {
           return caches.match('./index.html', { ignoreSearch: true });
         }
