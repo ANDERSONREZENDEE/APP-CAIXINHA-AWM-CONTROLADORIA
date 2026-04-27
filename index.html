@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Caixinha WM - App e Ver Senha</title>
-    
+
     <link rel="manifest" href="manifest.json?v=18">
     <link rel="apple-touch-icon" href="icone_principal_v14.png">
     <link rel="icon" type="image/png" href="icone_principal_v14.png">
@@ -22,8 +22,6 @@
         });
     </script>
 
-
-    
     <style>
         :root {
             --azul-wm: #1a233a; 
@@ -43,7 +41,7 @@
             user-select: none; 
             -webkit-touch-callout: none; 
         }
-        
+
         input, select, textarea {
             -webkit-user-select: auto;
             -moz-user-select: auto;
@@ -53,13 +51,13 @@
         }
 
         .app-container { width: 100%; max-width: 700px; background-color: var(--fundo); min-height: 95vh; border: 8px solid; border-image: linear-gradient(to right, var(--azul-wm) 50%, var(--laranja-wm) 50%) 1; box-shadow: 0 5px 15px rgba(0,0,0,0.3); box-sizing: border-box; position: relative; }
-        
+
         header { background-color: white; color: var(--azul-wm); padding: 15px 10px; text-align: center; font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 10px; border-bottom: 2px solid #ddd; }
-        
+
         .logos-container { display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 10px; width: 100%; max-width: 100%; overflow: hidden; box-sizing: border-box; padding: 0 5px; }
         .logo-wm { width: 48%; max-width: 150px; height: auto; pointer-events: none; object-fit: contain; } 
         .logo-controladoria { width: 48%; max-width: 150px; height: auto; border-radius: 4px; pointer-events: none; object-fit: contain; }
-        
+
         .titulo-header { font-size: 15px; color: var(--laranja-wm); margin-top: 5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
 
         .painel-saldo, .formulario, .area-acoes { background: white; margin: 10px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
@@ -67,14 +65,14 @@
         .saldo-atual { font-size: 20px; font-weight: bold; text-align: center; margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; }
         .positivo { color: var(--verde-pos) !important; font-weight: bold; }
         .negativo { color: var(--vermelho-neg) !important; font-weight: bold; }
-        
+
         .formulario { display: flex; flex-direction: column; gap: 10px; }
         label { font-size: 12px; font-weight: bold; color: #555; margin-top: 5px; }
         input, select { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
-        
+
         .btn-salvar { background-color: var(--azul-wm); color: white; border: none; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .btn-ver-planilha { background-color: var(--verde-pos); color: white; border: none; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 5px;}
-        
+
         .area-acoes { display: flex; flex-wrap: wrap; gap: 10px; }
         .btn-pausar { background-color: #e67e22; color: white; border: none; padding: 12px; font-size: 14px; border-radius: 5px; flex: 1; font-weight: bold; cursor: pointer;}
         .btn-whats { background-color: #25D366; color: white; border: none; padding: 15px; font-size: 14px; border-radius: 5px; flex: 1 1 100%; font-weight: bold; cursor: pointer; }
@@ -82,18 +80,25 @@
 
         #tela-planilha { display: none; padding: 10px; background: white; min-height: 90vh; }
         .tabela-container { overflow-x: auto; margin-top: 10px; border: 1px solid #ddd; border-radius: 5px; width: 100%; }
-        
+
         table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 11px; background: white; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: middle; }
         th { background-color: var(--azul-wm); color: white; }
-        
+
         .foto-miniatura { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; cursor: pointer; display: block; margin-top: 3px; }
         .anexo-box { display: flex; flex-direction: column; align-items: center; margin-bottom: 5px; background: #f9f9f9; padding: 5px; border-radius: 4px; border: 1px solid #eee; text-align: center; max-width: 120px; }
         .legenda-foto { font-size: 10px; font-weight: bold; color: var(--azul-wm); word-wrap: break-word; text-align: center; }
 
         .cabecalho-oficial { display: block; font-size: 13px; line-height: 1.4; background: white; padding: 10px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 10px; overflow: hidden; }
-        
+
         .cabecalho-oficial .info-box { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 8px; padding-top: 8px; }
+
+        /* Estilos para o cabeçalho do relatório na tela (Ver Planilha) */
+        .cabecalho-topo { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 10px; gap: 10px; }
+        .img-cabecalho { height: 50px; width: auto; max-width: 30%; object-fit: contain; }
+        .texto-cabecalho { text-align: center; flex: 1; }
+        .texto-cabecalho h3 { margin: 0; font-size: 14px; color: var(--azul-wm); }
+        .texto-cabecalho small { display: block; color: #666; font-size: 10px; margin-top: 2px; }
 
         @media print {
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
@@ -207,17 +212,17 @@
                 </div>
                 <input type="number" id="saldo-anterior" step="0.01" style="width: 110px; text-align: center; font-weight: bold;" onchange="salvarCabecalho()" required>
             </div>
-            
+
             <div class="linha-saldo" style="color: var(--verde-pos); margin-top: 10px;">
                 <span>Total Créditos WM:</span>
                 <span id="total-creditos">R$ 0,00</span>
             </div>
-            
+
             <div class="linha-saldo" style="color: var(--vermelho-neg);">
                 <span>Total Débitos:</span>
                 <span id="total-gasto">R$ 0,00</span>
             </div>
-            
+
             <div class="saldo-atual" id="saldo-atual-display">SALDO ATUAL: R$ 0,00</div>
         </div>
 
@@ -232,16 +237,16 @@
                 <option value="Combustível">Combustível</option>
                 <option value="Outras Despesas">Outras Despesas</option>
             </select>
-            
+
             <label>Data: <span style="color:red">*</span></label>
             <input type="date" id="data" required>
-            
+
             <label>Fornecedor: <span style="color:red">*</span></label>
             <input type="text" id="fornecedor" placeholder="Ex: Posto Ipiranga, WM Construções e Montagens..." required>
-            
+
             <label>Descrição do Gasto/Crédito: <span style="color:red">*</span></label>
             <input type="text" id="desc" placeholder="Ex: Gasto com almoço, Crédito WM, etc..." required>
-            
+
             <label>Valor (R$): <span style="color:red">*</span></label>
             <input type="number" id="valor" step="0.01" placeholder="0.00" required>
 
@@ -271,11 +276,11 @@
                     <option value="Conta de Telecomunicação/Internet">Conta de Telecomunicação/Internet</option>
                     <option value="Conta de Fornecimento de Gás">Conta de Fornecimento de Gás</option>
                 </select>
-                
+
                 <label>📸 Foto da Nota Fiscal: <span style="color:red">*</span></label>
                 <span style="font-size: 11px; color: #666; display: block; margin-bottom: 5px; font-style: italic;">Obrigatório: Tire a foto ou anexe o documento fiscal.</span>
                 <input type="file" id="foto-doc" accept="image/*" capture="environment" required>
-                
+
                 <div style="margin-top: 10px;">
                     <label style="font-size: 12px; margin-bottom: 3px;">Observação da Nota (Opcional):</label>
                     <textarea id="obs-doc" rows="2" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-weight: normal; font-size: 12px;" placeholder="Ex: Nota rasurada, faltando carimbo..."></textarea>
@@ -302,7 +307,7 @@
                 <label>📸 Foto do Pagamento: <span style="color:red">*</span></label>
                 <span style="font-size: 11px; color: #666; display: block; margin-bottom: 5px; font-style: italic;">Obrigatório: Anexe o comprovante de pagamento.</span>
                 <input type="file" id="foto-pagto" accept="image/*" capture="environment" required>
-                
+
                 <div style="margin-top: 10px;">
                     <label style="font-size: 12px; margin-bottom: 3px;">Observação do Pagamento (Opcional):</label>
                     <textarea id="obs-pagto" rows="2" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-weight: normal; font-size: 12px;" placeholder="Ex: Pagamento em dinheiro vivo, PIX feito na conta da esposa do dono, adiantamento..."></textarea>
@@ -323,7 +328,7 @@
 
     <div id="tela-planilha">
         <button class="btn-voltar" onclick="voltarParaFormulario()" style="width: 100%; padding: 10px; margin-bottom: 10px; font-weight: bold; background: #555; color: white; border: none; border-radius: 5px; cursor: pointer;">⬅ Voltar para Lançamentos</button>
-        
+
         <div class="cabecalho-oficial" id="cabecalho-pdf">
             <div class="cabecalho-topo">
                 <img src="LOGOTIPO.jpg" alt="WM" class="img-cabecalho">
@@ -419,7 +424,7 @@
             document.getElementById('tela-login').style.display = 'flex';
             toggleBodyScroll(true); 
         }
-        
+
         calcularSaldo();
         document.body.offsetHeight; 
         verificarAtalhos(); 
@@ -457,7 +462,7 @@
     function mostrarSenha() {
         let input = document.getElementById('senha-input');
         let icone = document.getElementById('icone-olho');
-        
+
         if (input.type === 'password') {
             input.type = 'text'; 
             icone.src = 'OLHOABERTO.png'; 
@@ -483,7 +488,7 @@
         document.getElementById('erro-senha-acao').style.display = 'none';
         document.getElementById('modal-acao').style.display = 'flex';
         toggleBodyScroll(true); 
-        
+
         if(acao === 'encerrar') {
             document.getElementById('texto-acao-modal').innerText = "Senha necessária para Zerar tudo e sair";
         }
@@ -505,11 +510,11 @@
     async function validarSenhaAcao() {
         const senhaDigitada = document.getElementById('senha-acao-input').value;
         const hashDigitado = await gerarHash(senhaDigitada);
-        
+
         if (hashDigitado === HASH_SENHA_MESTRA) {
             document.getElementById('modal-acao').style.display = 'none';
             toggleBodyScroll(false); 
-            
+
             if (acaoPendente === 'encerrar') {
                 encerrarCaixinha();
             }
@@ -533,7 +538,7 @@
     function calcularSaldo() {
         let inputAnterior = document.getElementById('saldo-anterior');
         let ant = parseFloat(inputAnterior.value) || 0;
-        
+
         if (ant >= 0) {
             inputAnterior.className = "positivo";
         } else {
@@ -543,10 +548,10 @@
         let cred = banco.filter(i => i.categoria.includes('CRÉDITO')).reduce((s, i) => s + i.valor, 0);
         let deb = banco.filter(i => !i.categoria.includes('CRÉDITO')).reduce((s, i) => s + i.valor, 0);
         let total = ant + cred - deb;
-        
+
         document.getElementById('total-creditos').innerText = cred.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         document.getElementById('total-gasto').innerText = deb.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        
+
         let display = document.getElementById('saldo-atual-display');
         display.innerText = "SALDO ATUAL: " + total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         display.className = total >= 0 ? "saldo-atual positivo" : "saldo-atual negativo";
@@ -592,37 +597,37 @@
 
         let categoria = document.getElementById('categoria').value;
         if(!categoria) return focarErro('categoria', "⚠️ Atenção: Selecione a Categoria!");
-        
+
         let dataStr = document.getElementById('data').value;
         if(!dataStr) return focarErro('data', "⚠️ Atenção: Preencha a Data!");
-        
+
         let fornecedor = document.getElementById('fornecedor').value;
         if(!fornecedor) return focarErro('fornecedor', "⚠️ Atenção: Preencha o Fornecedor!");
-        
+
         let desc = document.getElementById('desc').value;
         if(!desc) return focarErro('desc', "⚠️ Atenção: Preencha a Descrição do Gasto/Crédito!");
-        
+
         let valorInput = document.getElementById('valor').value;
         if(!valorInput) return focarErro('valor', "⚠️ Atenção: Preencha o Valor!");
 
         let tipoDoc = document.getElementById('tipo-doc').value;
         if(!tipoDoc) return focarErro('tipo-doc', "⚠️ Atenção: Selecione o Tipo de Documento Fiscal!");
-        
+
         let fotoDocFile = document.getElementById('foto-doc').files[0];
         if (indiceEdicao === -1 && !fotoDocFile) return focarErro('foto-doc', "⚠️ Atenção: É obrigatório anexar a Foto da Nota Fiscal!");
 
         let formaPagto = document.getElementById('forma-pagto').value;
         if(!formaPagto) return focarErro('forma-pagto', "⚠️ Atenção: Selecione a Forma de Pagamento!");
-        
+
         let fotoPagtoFile = document.getElementById('foto-pagto').files[0];
         if (indiceEdicao === -1 && !fotoPagtoFile) return focarErro('foto-pagto', "⚠️ Atenção: É obrigatório anexar a Foto do Pagamento!");
 
         let valor = parseFloat(valorInput);
-        
+
         document.getElementById('btn-salvar-principal').innerText = "⏳ Processando...";
         let fDoc = await comprimirImagem(fotoDocFile);
         let fPag = await comprimirImagem(fotoPagtoFile);
-        
+
         let obsDoc = document.getElementById('obs-doc').value;
         let obsPagto = document.getElementById('obs-pagto').value;
 
@@ -639,7 +644,7 @@
             obsDoc: obsDoc,      
             obsPagto: obsPagto  
         };
-        
+
         if (indiceEdicao >= 0) {
             if (!item.fotoDoc) item.fotoDoc = banco[indiceEdicao].fotoDoc;
             if (!item.fotoPagto) item.fotoPagto = banco[indiceEdicao].fotoPagto;
@@ -674,10 +679,10 @@
     function abrirPlanilha() {
         document.getElementById('tela-principal').style.display = 'none';
         document.getElementById('tela-planilha').style.display = 'block';
-        
+
         document.getElementById('print-num').innerText = document.getElementById('num-caixinha').value || "Não informado";
         document.getElementById('print-gestor').innerText = document.getElementById('nome-gestor').value || "Não informado";
-        
+
         let ant = parseFloat(document.getElementById('saldo-anterior').value) || 0;
         let printAnterior = document.getElementById('print-anterior');
         printAnterior.innerText = ant.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -685,12 +690,12 @@
 
         document.getElementById('print-creditos').innerText = document.getElementById('total-creditos').innerText;
         document.getElementById('print-debitos').innerText = document.getElementById('total-gasto').innerText;
-        
+
         let displayAtual = document.getElementById('saldo-atual-display');
         let printFinal = document.getElementById('print-final');
         printFinal.innerText = displayAtual.innerText.replace("SALDO ATUAL: ","");
         printFinal.className = displayAtual.className.includes('positivo') ? "positivo" : "negativo";
-        
+
         document.getElementById('print-data-emissao').innerText = "Emitido em: " + new Date().toLocaleDateString() + " às " + new Date().toLocaleTimeString();
 
         let corpo = document.getElementById('corpo-tabela'); 
@@ -700,7 +705,7 @@
             if(item.fotoDoc) fHTML += `<div class="anexo-box"><span class="legenda-foto">${item.tipoDoc}</span><img src="${item.fotoDoc}" class="foto-miniatura" onclick="verFoto('${item.fotoDoc}')"></div>`;
             if(item.fotoPagto) fHTML += `<div class="anexo-box"><span class="legenda-foto">${item.formaPagto}</span><img src="${item.fotoPagto}" class="foto-miniatura" onclick="verFoto('${item.fotoPagto}')"></div>`;
             fHTML += `</div>`;
-            
+
             corpo.innerHTML += `<tr>
                 <td>${item.categoria}</td>
                 <td>${item.data}</td>
@@ -740,13 +745,13 @@
 
     function encerrarCaixinha() { 
         if(confirm("Zerar tudo? Você perderá todos os dados não enviados!")) { 
-            
+
             localStorage.removeItem('wm_despesas'); 
             localStorage.removeItem('wm_sessao_ativa'); 
             localStorage.removeItem('wm_num');
             localStorage.removeItem('wm_gestor');
             localStorage.removeItem('wm_anterior');
-            
+
             banco = [];
             indiceEdicao = -1;
             document.getElementById('corpo-tabela').innerHTML = "";
@@ -766,15 +771,15 @@
             document.getElementById('forma-pagto').selectedIndex = 0;
 
             calcularSaldo();
-            
+
             document.getElementById('tela-principal').style.display = 'none';
             document.getElementById('tela-planilha').style.display = 'none';
             document.getElementById('tela-login').style.display = 'flex';
             toggleBodyScroll(true); 
-            
+
             document.getElementById('senha-input').value = '';
             document.getElementById('erro-login').style.display = 'none';
-            
+
             alert("✅ Caixinha encerrado, dados e sessão apagados com sucesso!");
         } 
     }
@@ -815,7 +820,7 @@
         }).catch(err => {
             console.log("Erro no Service Worker:", err);
         });
-        
+
         document.addEventListener("visibilitychange", () => {
             if (document.visibilityState === "visible") {
                 document.body.offsetHeight; 
