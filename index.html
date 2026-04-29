@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Caixinha WM - App e Ver Senha</title>
+    <title>Caixinha WM</title>
 
     <link rel="manifest" href="manifest.json?v=18">
     <link rel="apple-touch-icon" href="icone_principal_v14.png">
@@ -271,10 +271,6 @@
                     <option value="Recibo">Recibo</option>
                     <option value="Comanda">Comanda</option>
                     <option value="Orçamento">Orçamento</option>            
-                    <option value="Conta de Energia Elétrica">Conta de Energia Elétrica</option>
-                    <option value="Conta de Água/Esgoto">Conta de Água/Esgoto</option>
-                    <option value="Conta de Telecomunicação/Internet">Conta de Telecomunicação/Internet</option>
-                    <option value="Conta de Fornecimento de Gás">Conta de Fornecimento de Gás</option>
                 </select>
 
                 <label>📸 Foto da Nota Fiscal: <span style="color:red">*</span></label>
@@ -490,7 +486,7 @@
         toggleBodyScroll(true); 
 
         if(acao === 'encerrar') {
-            document.getElementById('texto-acao-modal').innerText = "Senha necessária para Zerar tudo e sair";
+            document.getElementById('texto-acao-modal').innerText = "Senha necessária para apagar tudo e sair";
         }
     }
 
