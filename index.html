@@ -972,15 +972,15 @@
 
 
 <script>
-    // ==========================================================
-    // SENHA EMBUTIDA NO INDEX - V38
-    // Pedido atual: senha fica dentro do index.html.
-    // Para alterar a senha, altere somente o hash abaixo.
-    // ==========================================================
-    window.HASH_SENHA_MESTRA = "544f77a1f22a352c4160858b2d787cba9576be6d70b0ed53b74a8139ca861a61";
-</script>
+    // SENHA EMBUTIDA NO INDEX - HASH CAMUFLADO EM NÚMEROS
+    window.SENHA_MESTRA_CAMUFLADA = [97, 53, 55, 57, 56, 55, 99, 100, 52, 98, 56, 101, 99, 48, 99, 98, 101, 98, 50, 51, 50, 57, 52, 100, 52, 51, 50, 56, 52, 55, 57, 101, 100, 102, 102, 54, 51, 55, 102, 50, 56, 102, 56, 100, 100, 97, 57, 50, 102, 57, 56, 54, 97, 51, 102, 100, 56, 49, 51, 50, 57, 97, 56, 53];
 
-<script>
+    function obterHashSenhaMestra() {
+        return window.SENHA_MESTRA_CAMUFLADA.map(numero => String.fromCharCode(numero)).join('');
+    }
+
+    window.HASH_SENHA_MESTRA = obterHashSenhaMestra();
+</script>
 
 
     // ==========================================
